@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CourseRepositoryImpl extends AbstractCrudRepository<Course> {
+public class CourseRepositoryImpl extends AbstractFilteringRepository<Course> {
+
     @Autowired
     protected CourseRepositoryImpl(SessionFactory sessionFactory, Class<Course> clazz) {
         super(sessionFactory, clazz);

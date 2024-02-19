@@ -4,6 +4,7 @@ import com.example.school.management.system.models.Teacher;
 import com.example.school.management.system.models.filters.FilterOptions;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeacherService {
 
@@ -13,7 +14,7 @@ public interface TeacherService {
 
     void modify(Teacher teacher);
 
-    Teacher getById(int id);
+    Optional<Teacher> getById(int id);
 
     List<Teacher> getAll(FilterOptions filterOptions);
 

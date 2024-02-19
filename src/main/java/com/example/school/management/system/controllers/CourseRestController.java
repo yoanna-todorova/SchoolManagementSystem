@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/sms/courses")
@@ -66,7 +67,9 @@ public class CourseRestController {
     public CourseDisplayDto create(@RequestBody CourseCreateDto courseCreateDto) {
         Course course = CourseMapper.fromCourseDto(courseCreateDto);
         try {
-            Teacher teacher = teacherService.getById(courseCreateDto.getTeacherId());
+            Optional<Teacher> optionalTeacher = teacherService.getById(courseCreateDto.getTeacherId());
+            Teacher teacher = optionalTeacher.orElse(null);
+            if (teacher == null) return null;
             courseService.add(course, teacher);
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -83,9 +86,10 @@ public class CourseRestController {
             Course course = courseService.getById(id);
             Teacher teacher = course.getTeacher();
             if (courseDto.getTeacherId() != 0) {
-                teacher = teacherService.getById(courseDto.getTeacherId());
+                Optional<Teacher> optionalTeacher = teacherService.getById(courseDto.getTeacherId());
+                teacher = optionalTeacher.orElse(null);
             }
-            course = CourseMapper.fromCourseCreateDto(course, courseDto);
+            CourseMapper.fromCourseCreateDto(course, courseDto);
             courseService.modify(course, teacher);
 
         } catch (EntityNotFoundException e) {

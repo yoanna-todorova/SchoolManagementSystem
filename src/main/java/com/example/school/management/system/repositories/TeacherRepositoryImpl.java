@@ -2,6 +2,7 @@ package com.example.school.management.system.repositories;
 
 import com.example.school.management.system.models.Teacher;
 import com.example.school.management.system.models.filters.FilterOptions;
+import com.example.school.management.system.repositories.contracts.FilteringRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,10 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TeacherRepositoryImpl extends AbstractCrudRepository<Teacher> {
+public class TeacherRepositoryImpl extends AbstractFilteringRepository<Teacher>  {
+
     @Autowired
     protected TeacherRepositoryImpl(SessionFactory sessionFactory, Class<Teacher> clazz) {
-        super(sessionFactory, clazz);
+       super(sessionFactory, clazz);
     }
 
     @Override

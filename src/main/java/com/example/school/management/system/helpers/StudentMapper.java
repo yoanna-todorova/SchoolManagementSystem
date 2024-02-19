@@ -19,11 +19,13 @@ public class StudentMapper {
     public StudentDisplayDto fromStudent(Student student) {
         StudentDisplayDto studentDisplayDto = new StudentDisplayDto();
         studentDisplayDto.setName(student.getName());
-        studentDisplayDto.setAge(LocalDate.now().getYear() - student.getBirthdate().getYear());
+        int age = LocalDate.now().getYear() - student.getBirthdate().getYear();
         if ((student.getBirthdate().getMonth().compareTo(LocalDate.now().getMonth()) > 0)
                 || (student.getBirthdate().getMonth().compareTo(LocalDate.now().getMonth()) == 0
                 && student.getBirthdate().getDayOfMonth() > LocalDate.now().getDayOfMonth()))
-            studentDisplayDto.setAge(studentDisplayDto.getAge() - 1);
+            age-=1;
+
+        studentDisplayDto.setAge(age);
         studentDisplayDto.setGroup(student.getGroup().getId());
         if (!student.getCourses().isEmpty()) {
             Set<CourseDisplayDto> courseDisplayDtoSet = new HashSet<>();
